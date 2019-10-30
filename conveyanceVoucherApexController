@@ -1,0 +1,7 @@
+public class Conveyancevouchercontroller {
+    @AuraEnabled
+    public static void saveconveyance(list<Conveyance_Voucher__c> listofconveyance){
+        insert listofconveyance;
+    }
+    
+}

@@ -1,0 +1,20 @@
+({	
+   // doInit : function(component, event, helper) {
+      //  var value = helper.getParameterByName(component , event, 'inContextOfRef');
+      //  var context = JSON.parse(window.atob(value));
+      //  component.set("v.parentRecordId", context.attributes.recordId);
+       
+  //  },
+    
+    AddNewRow : function(component, event, helper){
+        // fire the AddNewRowEvt Lightning Event 
+        component.getEvent("AddRowEvt").fire();     
+    },
+    
+    removeRow : function(component, event, helper){
+        // fire the DeleteRowEvt Lightning Event and pass the deleted Row Index to Event parameter/attribute
+        component.getEvent("DeleteRowEvt").setParams({"indexVar" : component.get("v.rowIndex") }).fire();
+    }, 
+    
+    
+})

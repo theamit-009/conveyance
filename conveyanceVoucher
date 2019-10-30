@@ -1,0 +1,91 @@
+<aura:component controller="Conveyancevouchercontroller" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride" access="global" >
+    <!--Init handler which is call doInit js function on component Load-->  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="recordId" type="String" />
+    
+    <!--Event handler for Add and Delete Row Event which is fire from Child Component-->    
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRowEvt" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="AddRowEvt" event="c:AddNewRowEvt" action="{!c.addNewRow}"/>
+    
+    
+    <!--Aura Attribute for store Contact Object List as Array-->    
+    <aura:attribute name="ConveyancecashList" type="Conveyance_Voucher__c[]"/> 
+    
+    
+    
+    
+    <!--Header Part-->        
+    <div class="slds-page-header">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-opportunity" title="Conveyance">
+                            <img src="{!$Resource.LLFConveyance}" width="40" height="40"/>   
+                            <span class="slds-assistive-text">Conveyance</span>  
+                        </span>
+                        
+                    </div>
+                    <div class="slds-media__body">
+                        <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                                <h1>
+                                    
+                                    <span class="slds-page-header__title slds-truncate" title="Conveyane">Conveyance Voucher</span>
+                                </h1>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <lightning:button class="slds-m-left_xx-large slds-float_right" variant="neutral" label="Conveyance Policy Document" onclick="{! c.openConveyanceFile }"/>
+        </div>
+    </div> 
+    
+    
+    <br/>
+    <!--Table Part-->           
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+        <thead >
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate" >Slip No.</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="From">From</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="To">To</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Purpose of Travel">Purpose of Travel</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Mode of Conveyance">Mode of Conveyance</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Kms. Travelled">Kms. Travelled</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Amount">Amount</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="File Upload">File Upload</div>
+                </th>
+            </tr>
+        </thead>   
+        <tbody>
+            <!--Iterate the child Component for display Table rows 
+               with pass the List Item Index for track the Every child Component 
+               and pass each List Contact Instance -->         
+            <aura:iteration items="{!v.ConveyancecashList}" var="item" indexVar="index">
+                <c:ConveyanceVoucherlineitem ConveyanceCashInstance="{!item}" rowIndex="{!index}"  />
+                
+            </aura:iteration>
+        </tbody>
+    </table>
+   
+    <!--Save Button which is call Save js function on click --> 
+    <button class="slds-button slds-button_brand" onclick="{!c.Save}">Save</button>
+</aura:component>

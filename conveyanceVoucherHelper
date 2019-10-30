@@ -1,0 +1,35 @@
+({
+    createObjectData: function(component, event) {
+        // get the ConveyancecashList from component and add(push) New Object to List
+         
+        var RowItemList = component.get("v.ConveyancecashList"); 
+        var expenseparentid  = component.get("v.recordId"); 
+        RowItemList.push({
+            'sobjectType': 'Conveyance_Voucher__c',
+            'Expense__c': expenseparentid,
+            'From__c': '',
+            'To__c': '',
+            'Purpose_of_Travel__c': '',
+            'Mode_of_Conveyance__c': '',
+            'Kms_Travelled__c': '',
+            'Nature_of_exp__c': '',
+            'Amount__c': '',
+            'Files__c' : ''
+
+        });
+        // set the updated list to attribute (ConveyancecashList) again    
+        component.set("v.ConveyancecashList", RowItemList);
+    },
+    // helper function for check if Bill No. is not null/blank on save  
+    validateRequired: function(component, event) {
+        var isValid = true;
+        var allCashRows = component.get("v.ConveyancecashList");
+        for (var indexVar = 0; indexVar < allCashRows.length; indexVar++) {
+            if (allCashRows[indexVar].From__c == '') {
+                isValid = false;
+                alert('First line Can\'t be Blank on Row Number ' + (indexVar + 1));
+            }
+        }
+        return isValid;
+    },
+})

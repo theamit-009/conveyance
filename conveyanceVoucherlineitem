@@ -1,0 +1,77 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <!-- Aura Attribute for store single PettyCash[Custom Object] Instance
+         And Store Index of Particular Instance --> 
+   
+    <aura:attribute name="ConveyanceCashInstance" type="Conveyance_Voucher__c"/>
+    <aura:attribute name="rowIndex" type="String"/>
+    <aura:attribute name="accept" type="List" default="['.jpg', '.jpeg']"/>
+    <aura:attribute name="multiple" type="Boolean" default="true"/>
+    <aura:attribute name="disabled" type="Boolean" default="false"/>
+   <!-- <aura:attribute name="parentRecordId" type="String" />
+    <p>{!v.parentRecordId}</p>
+-->
+    
+    <!-- Register 2 Lightning Event for handle add or Delete rows on Parent Component  --> 
+    <aura:registerEvent name="DeleteRowEvt" type="c:DeleteRowEvt"/> 
+    <aura:registerEvent name="AddRowEvt" type="c:AddNewRowEvt"/> 
+   
+    
+    <!-- Table Row -->   
+    <tr class="slds-text-title_caps" >
+        <td> 
+            {!v.rowIndex + 1}
+        </td>
+        <td>
+            <ui:inputDate class="slds-input" value="{!v.ConveyanceCashInstance.From__c}" displayDatePicker="true" />
+        </td>
+        <td>
+            <ui:inputDate class="slds-input" value="{!v.ConveyanceCashInstance.To__c}" displayDatePicker="true" />
+        </td>
+        <td>
+            <ui:inputTextArea class="slds-input" value="{!v.ConveyanceCashInstance.Purpose_of_Travel__c}" rows="2" />
+        </td>
+        <td>
+            <ui:inputText class="slds-input" value="{!v.ConveyanceCashInstance.Mode_of_Conveyance__c}"/>
+        </td>
+        <td>
+            <ui:inputNumber class="slds-input" value="{!v.ConveyanceCashInstance.Kms_Travelled__c}" />
+        </td>
+        <td>
+            <ui:inputCurrency class="slds-input" value="{!v.ConveyanceCashInstance.Amount__c}"/>
+        </td>
+		<td>
+            <lightning:fileUpload  name="fileUploader"
+                           label= ""
+                           multiple="{!v.multiple}"
+                           accept="{!v.accept}"
+                           disabled="{!v.disabled}"
+                           recordId="abcd"
+                           onuploadfinished="{!c.handleUploadFinished }"/>
+   
+ 
+    
+        </td>
+
+        <td>
+            <!-- conditionally Display Add or Delete Icons
+                 if rowIndex is 0 then show Add New Row Icon else show delete Icon
+             --> 
+            <aura:if isTrue="{!v.rowIndex == 0}">
+                <a onclick="{!c.AddNewRow}">
+                    <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                    <span class="slds-assistive-text">Add Icon</span>
+                </a>  
+                <aura:set attribute="else">
+                   
+                    <a onclick="{!c.removeRow}">
+                        <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                        <span class="slds-assistive-text">Delete Icon</span>
+                    </a>
+				
+                </aura:set> 
+            </aura:if>
+            
+        </td> 
+    </tr>
+    
+</aura:component>
